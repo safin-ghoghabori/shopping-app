@@ -121,6 +121,7 @@ const HomeScreen = () => {
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
+              marginBottom: 12,
             }}
           >
             <Text style={{ fontSize: 18, fontWeight: "600" }}>
@@ -161,7 +162,7 @@ const Card = () => {
     >
       <Image
         source={{
-          uri: "https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80",
+          uri: "https://images.unsplash.com/photo-1484515991647-c5760fcecfc7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1049&q=80",
         }}
         resizeMode="cover"
         style={{
@@ -172,6 +173,22 @@ const Card = () => {
           right: 0,
         }}
       />
+
+      <View
+        style={{
+          position: "absolute",
+          left: 12,
+          top: 16,
+          backgroundColor: "rgba(0,0,0,0.3)",
+          paddingVertical: 10,
+          paddingHorizontal: 16,
+          borderRadius: 100,
+        }}
+      >
+        <Text style={{ fontSize: 16, fontWeight: "700", color: "#fff" }}>
+          $ 130
+        </Text>
+      </View>
     </View>
   );
 };
