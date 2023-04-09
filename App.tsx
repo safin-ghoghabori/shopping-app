@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-gesture-handler";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function App() {
   console.log("default...", DefaultTheme);
@@ -25,14 +26,16 @@ export default function App() {
   );
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <NavigationContainer theme={theme}>
-        <BottomSheetModalProvider>
-          <RootNavigation />
-          <StatusBar style="dark" />
-        </BottomSheetModalProvider>
-      </NavigationContainer>
-    </GestureHandlerRootView>
+    <SafeAreaProvider style={{ flex: 1 }}>
+      <GestureHandlerRootView style={styles.container}>
+        <NavigationContainer theme={theme}>
+          <BottomSheetModalProvider>
+            <RootNavigation />
+            <StatusBar style="dark" />
+          </BottomSheetModalProvider>
+        </NavigationContainer>
+      </GestureHandlerRootView>
+    </SafeAreaProvider>
   );
 }
 
