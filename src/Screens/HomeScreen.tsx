@@ -13,7 +13,10 @@ import MasonryList from "reanimated-masonry-list";
 import { BlurView } from "expo-blur";
 
 import Icons from "@expo/vector-icons/MaterialIcons";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import CustomBackdrop from "../components/CustomBackdrop";
+import FilterView from "../components/FilterView";
 
 const AVATAR_URL =
   "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
@@ -30,6 +33,12 @@ const categories = [
 const HomeScreen = () => {
   const { colors } = useTheme();
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
+
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  const handleOpenBottomSheetModal = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
 
   const renderCategories = ({
     item,
@@ -207,7 +216,7 @@ const HomeScreen = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Search bar */}
+        {/* Search bar and Filter button*/}
         <View style={{ flexDirection: "row", paddingHorizontal: 24, gap: 24 }}>
           <TouchableOpacity
             style={{
@@ -249,6 +258,7 @@ const HomeScreen = () => {
               alignItems: "center",
               justifyContent: "center",
             }}
+            onPress={handleOpenBottomSheetModal}
           >
             <Icons name="tune" size={24} color={colors.background} />
           </TouchableOpacity>
@@ -314,6 +324,15 @@ const HomeScreen = () => {
             gap: 12,
           }}
         />
+
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          snapPoints={["80%"]}
+          index={0}
+          backdropComponent={(props) => <CustomBackdrop {...props} />}
+        >
+          <FilterView />
+        </BottomSheetModal>
       </SafeAreaView>
     </ScrollView>
   );

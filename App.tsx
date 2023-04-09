@@ -2,12 +2,11 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import HomeScreen from "./src/Screens/HomeScreen";
-import DetailsScreen from "./src/Screens/DetailsScreen";
 import RootNavigation from "./src/navigation/RootNavigation";
 import { useMemo } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 export default function App() {
   console.log("default...", DefaultTheme);
@@ -28,8 +27,10 @@ export default function App() {
   return (
     <GestureHandlerRootView style={styles.container}>
       <NavigationContainer theme={theme}>
-        <RootNavigation />
-        <StatusBar style="dark" />
+        <BottomSheetModalProvider>
+          <RootNavigation />
+          <StatusBar style="dark" />
+        </BottomSheetModalProvider>
       </NavigationContainer>
     </GestureHandlerRootView>
   );
