@@ -2,13 +2,20 @@ import { View, Text } from "react-native";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "@react-navigation/native";
+import Chip from "./Chip";
 
 const MIN_PRICE = 0;
 const MAX_PRICE = 500;
 
 const FilterView = () => {
-  const [minPrice, SetminPrice] = useState(50);
+  const [minPrice, SetMinPrice] = useState(50);
   const [maxPrice, setMaxPrice] = useState(250);
+
+  const [selectedChipIndex, setSelectedChipIndex] = useState<number>(0);
+
+  const handleChipSelection = (index: number) => {
+    setSelectedChipIndex(index);
+  };
 
   const { colors } = useTheme();
 
@@ -32,8 +39,8 @@ const FilterView = () => {
 
       {/* Range Selector */}
       <View style={{ paddingHorizontal: 16 }}>
-        <View style={{ marginBottom: 16 }}>
-          <Text>Price Range</Text>
+        <View style={{ marginBottom: 30 }}>
+          <Text style={{ fontWeight: "600" }}>Price Range</Text>
         </View>
         <View
           style={{
@@ -70,6 +77,31 @@ const FilterView = () => {
         >
           <Text style={{ opacity: 0.5, color: colors.text }}>${MIN_PRICE}</Text>
           <Text style={{ opacity: 0.5, color: colors.text }}>${MAX_PRICE}</Text>
+        </View>
+      </View>
+
+      {/* Sports Filter */}
+      <View style={{ paddingHorizontal: 16 }}>
+        <Text style={{ fontWeight: "600" }}>Sports</Text>
+        <View
+          style={{
+            paddingTop: 16,
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: 5,
+          }}
+        >
+          {new Array(8).fill("").map((item, index) => {
+            const isSelected = index === selectedChipIndex;
+
+            return (
+              <Chip
+                index={index}
+                isSelected={isSelected}
+                handleChipSelection={handleChipSelection}
+              />
+            );
+          })}
         </View>
       </View>
     </View>
