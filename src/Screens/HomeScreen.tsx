@@ -6,9 +6,11 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MasonryList from "reanimated-masonry-list";
+import { BlurView } from "expo-blur";
 
 import Icons from "@expo/vector-icons/MaterialIcons";
 import { useState } from "react";
@@ -68,6 +70,91 @@ const HomeScreen = () => {
     );
   };
 
+  const renderMesonaryList = ({ item, i }) => {
+    return (
+      <View style={{ padding: 6 }}>
+        <View
+          style={{
+            aspectRatio: i === 0 ? 1 : 2 / 3,
+            position: "relative",
+            overflow: "hidden",
+            borderRadius: 24,
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://images.unsplash.com/photo-1559893088-c0787ebfc084?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3570&q=80",
+            }}
+            resizeMode="cover"
+            style={StyleSheet.absoluteFill}
+          />
+
+          <View style={[StyleSheet.absoluteFill, { padding: 14 }]}>
+            {/* Text and Favorite Icon */}
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <Text style={{ flex: 1, fontSize: 12, fontWeight: "600" }}>
+                PUMA Everyday Hussle
+              </Text>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#fff",
+                  height: 32,
+                  aspectRatio: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 100,
+                }}
+              >
+                <Icons name="favorite-outline" size={20} color={colors.text} />
+              </TouchableOpacity>
+            </View>
+
+            {/* Extra View to adjust set top and bottom View */}
+            <View style={{ flex: 1 }} />
+
+            {/* Price Tab */}
+            <BlurView
+              style={{
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 12,
+                borderRadius: 100,
+                overflow: "hidden",
+              }}
+              intensity={30}
+            >
+              <Text
+                style={{
+                  flex: 1,
+                  color: "#fff",
+                  fontWeight: "600",
+                  fontSize: 12,
+                }}
+              >
+                $165.00
+              </Text>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#fff",
+                  paddingHorizontal: 20,
+                  paddingVertical: 6,
+                  borderRadius: 100,
+                }}
+              >
+                <Icons name="shopping-bag" size={20} color={colors.text} />
+              </TouchableOpacity>
+            </BlurView>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <ScrollView>
       <SafeAreaView style={{ paddingVertical: 24, gap: 24 }}>
@@ -88,7 +175,7 @@ const HomeScreen = () => {
           <View style={{ flex: 1 }}>
             <Text
               style={{
-                fontSize: 18,
+                fontSize: 14,
                 fontWeight: "600",
                 marginBottom: 8,
                 color: colors.text,
@@ -215,6 +302,18 @@ const HomeScreen = () => {
         />
 
         {/* Mesonary */}
+        <MasonryList
+          data={[1, 2, 3, 4, 5, 6]}
+          keyExtractor={(item): string => item}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          renderItem={renderMesonaryList}
+          onEndReachedThreshold={0.1}
+          contentContainerStyle={{
+            paddingHorizontal: 16,
+            gap: 12,
+          }}
+        />
       </SafeAreaView>
     </ScrollView>
   );
