@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React, { useState } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "@react-navigation/native";
 import Chip from "./Chip";
 
@@ -64,161 +64,169 @@ const FilterView = () => {
   const { colors } = useTheme();
 
   return (
-    <View style={{ gap: 20 }}>
-      {/* Titles */}
-      <View
-        style={{
-          flexDirection: "row",
-          paddingHorizontal: 16,
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ flex: 1, fontWeight: "600", fontSize: 16 }}>
-          Filters
-        </Text>
-        <TouchableOpacity>
-          <Text>REST</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Range Selector */}
-      <View style={{ paddingHorizontal: 16 }}>
-        <View style={{ marginBottom: 30 }}>
-          <Text style={{ fontWeight: "600" }}>Price Range</Text>
-        </View>
-        <View
-          style={{
-            height: 1,
-            width: "100%",
-            backgroundColor: colors.border,
-            position: "relative",
-          }}
-        >
+    <View style={{ flex: 1 }}>
+      <ScrollView>
+        <View style={{ gap: 12, paddingVertical: 24 }}>
+          {/* Titles */}
           <View
             style={{
-              position: "absolute",
-              left: `${(100 * minPrice) / MAX_PRICE}%`,
-              width: `${(100 * (maxPrice - minPrice)) / MAX_PRICE}%`,
-              height: "100%",
-              backgroundColor: colors.primary,
+              flexDirection: "row",
+              paddingHorizontal: 16,
+              alignItems: "center",
             }}
-          />
-
-          <View style={{ position: "absolute", left: "10%" }}>
-            <SliderHandle />
+          >
+            <Text style={{ flex: 1, fontWeight: "600", fontSize: 16 }}>
+              Filters
+            </Text>
+            <TouchableOpacity>
+              <Text>REST</Text>
+            </TouchableOpacity>
           </View>
-          <View style={{ position: "absolute", left: "50%" }}>
-            <SliderHandle />
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingVertical: 16,
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ opacity: 0.5, color: colors.text }}>${MIN_PRICE}</Text>
-          <Text style={{ opacity: 0.5, color: colors.text }}>${MAX_PRICE}</Text>
-        </View>
-      </View>
 
-      {/* Sports Filter */}
-      <View style={{ paddingHorizontal: 16 }}>
-        <Text style={{ fontWeight: "600" }}>Sports</Text>
-        <View
-          style={{
-            paddingTop: 16,
-            flexDirection: "row",
-            flexWrap: "wrap",
-            gap: 5,
-          }}
-        >
-          {new Array(8).fill("").map((item, index) => {
-            const isSelected = index === selectedChipIndex;
-
-            return (
-              <Chip
-                index={index}
-                isSelected={isSelected}
-                handleChipSelection={handleChipSelection}
+          {/* Range Selector */}
+          <View style={{ paddingHorizontal: 16 }}>
+            <View style={{ marginBottom: 30 }}>
+              <Text style={{ fontWeight: "600" }}>Price Range</Text>
+            </View>
+            <View
+              style={{
+                height: 1,
+                width: "100%",
+                backgroundColor: colors.border,
+                position: "relative",
+              }}
+            >
+              <View
+                style={{
+                  position: "absolute",
+                  left: `${(100 * minPrice) / MAX_PRICE}%`,
+                  width: `${(100 * (maxPrice - minPrice)) / MAX_PRICE}%`,
+                  height: "100%",
+                  backgroundColor: colors.primary,
+                }}
               />
-            );
-          })}
-        </View>
-      </View>
 
-      {/* Colors Filter */}
-      <View style={{ paddingHorizontal: 16 }}>
-        <Text style={{ fontWeight: "600" }}>Colors</Text>
-        <View
-          style={{
-            paddingTop: 16,
-            flexDirection: "row",
-            flexWrap: "wrap",
-            gap: 5,
-          }}
-        >
-          {COLORS.map((item, index) => {
-            const isSelected = item.index === selectedChipIndex;
+              <View style={{ position: "absolute", left: "10%" }}>
+                <SliderHandle />
+              </View>
+              <View style={{ position: "absolute", left: "50%" }}>
+                <SliderHandle />
+              </View>
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                paddingVertical: 16,
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ opacity: 0.5, color: colors.text }}>
+                ${MIN_PRICE}
+              </Text>
+              <Text style={{ opacity: 0.5, color: colors.text }}>
+                ${MAX_PRICE}
+              </Text>
+            </View>
+          </View>
 
-            return (
-              <Chip
-                index={item.index}
-                isSelected={isSelected}
-                handleChipSelection={handleChipSelection}
-                label={item.title}
-                colorCircle={
-                  <View
-                    style={{
-                      height: 16,
-                      aspectRatio: 1,
-                      borderRadius: 100,
-                      backgroundColor: item.color,
-                    }}
+          {/* Sports Filter */}
+          <View style={{ paddingHorizontal: 16 }}>
+            <Text style={{ fontWeight: "600" }}>Sports</Text>
+            <View
+              style={{
+                paddingTop: 16,
+                flexDirection: "row",
+                flexWrap: "wrap",
+                gap: 5,
+              }}
+            >
+              {new Array(8).fill("").map((item, index) => {
+                const isSelected = index === selectedChipIndex;
+
+                return (
+                  <Chip
+                    index={index}
+                    isSelected={isSelected}
+                    handleChipSelection={handleChipSelection}
                   />
-                }
-              />
-            );
-          })}
-        </View>
-      </View>
+                );
+              })}
+            </View>
+          </View>
 
-      {/* Sleeves Filter */}
-      <View style={{ paddingHorizontal: 16 }}>
-        <Text style={{ fontWeight: "600" }}>Sleeves</Text>
-        <View
-          style={{
-            paddingTop: 16,
-            flexDirection: "row",
-            flexWrap: "wrap",
-            gap: 5,
-          }}
-        >
-          {SLEEVES.map((item, index) => {
-            const isSelected = index === selectedChipIndex;
+          {/* Colors Filter */}
+          <View style={{ paddingHorizontal: 16 }}>
+            <Text style={{ fontWeight: "600" }}>Colors</Text>
+            <View
+              style={{
+                paddingTop: 16,
+                flexDirection: "row",
+                flexWrap: "wrap",
+                gap: 5,
+              }}
+            >
+              {COLORS.map((item, index) => {
+                const isSelected = item.index === selectedChipIndex;
 
-            return (
-              <Chip
-                index={index}
-                isSelected={isSelected}
-                handleChipSelection={handleChipSelection}
-                label={item.title}
-              />
-            );
-          })}
+                return (
+                  <Chip
+                    index={item.index}
+                    isSelected={isSelected}
+                    handleChipSelection={handleChipSelection}
+                    label={item.title}
+                    colorCircle={
+                      <View
+                        style={{
+                          height: 16,
+                          aspectRatio: 1,
+                          borderRadius: 100,
+                          backgroundColor: item.color,
+                        }}
+                      />
+                    }
+                  />
+                );
+              })}
+            </View>
+          </View>
+
+          {/* Sleeves Filter */}
+          <View style={{ paddingHorizontal: 16 }}>
+            <Text style={{ fontWeight: "600" }}>Sleeves</Text>
+            <View
+              style={{
+                paddingTop: 16,
+                flexDirection: "row",
+                flexWrap: "wrap",
+                gap: 5,
+              }}
+            >
+              {SLEEVES.map((item, index) => {
+                const isSelected = index === selectedChipIndex;
+
+                return (
+                  <Chip
+                    index={index}
+                    isSelected={isSelected}
+                    handleChipSelection={handleChipSelection}
+                    label={item.title}
+                  />
+                );
+              })}
+            </View>
+          </View>
         </View>
-      </View>
+      </ScrollView>
 
       {/* Apply Filter Button */}
-      <View style={{ paddingHorizontal: 16 }}>
+      <View style={{ padding: 24, paddingBottom: insets.bottom }}>
         <TouchableOpacity
           style={{
             backgroundColor: colors.text,
             paddingHorizontal: 26,
             borderRadius: 100,
-            paddingVertical: 22,
+            height: 64,
             justifyContent: "center",
             alignItems: "center",
             position: "relative",
