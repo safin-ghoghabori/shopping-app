@@ -1,14 +1,72 @@
 import { useTheme } from "@react-navigation/native";
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MasonryList from "reanimated-masonry-list";
 
 import Icons from "@expo/vector-icons/MaterialIcons";
+import { useState } from "react";
 
 const AVATAR_URL =
   "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
 
+const categories = [
+  "Clothing",
+  "Shoes",
+  "Accessories",
+  "Accessories-1",
+  "Accessories-2",
+  "Accessories-3",
+];
+
 const HomeScreen = () => {
   const { colors } = useTheme();
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
+
+  const renderCategories = ({
+    item,
+    index,
+  }: {
+    item: string;
+    index: number;
+  }) => {
+    const isSelected = selectedCategoryIndex === index;
+    return (
+      <TouchableOpacity
+        key={index}
+        style={{
+          backgroundColor:
+            selectedCategoryIndex === index ? colors.primary : colors.card,
+          paddingHorizontal: 24,
+          paddingVertical: 16,
+          justifyContent: "center",
+          alignItems: "center",
+          borderRadius: 100,
+          borderWidth: isSelected ? 0 : 1,
+          borderColor: colors.border,
+        }}
+        onPress={() => setSelectedCategoryIndex(index)}
+      >
+        <Text
+          style={{
+            color:
+              selectedCategoryIndex === index ? colors.background : colors.text,
+            fontWeight: "600",
+            fontSize: 16,
+            opacity: isSelected ? 1 : 0.5,
+          }}
+        >
+          {item}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <ScrollView>
@@ -143,6 +201,20 @@ const HomeScreen = () => {
             </View>
           </View>
         </View>
+
+        {/* Categories */}
+        <FlatList
+          data={categories}
+          renderItem={renderCategories}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{
+            gap: 12,
+            paddingHorizontal: 16,
+          }}
+        />
+
+        {/* Mesonary */}
       </SafeAreaView>
     </ScrollView>
   );

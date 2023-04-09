@@ -6,6 +6,8 @@ import HomeScreen from "./src/Screens/HomeScreen";
 import DetailsScreen from "./src/Screens/DetailsScreen";
 import RootNavigation from "./src/navigation/RootNavigation";
 import { useMemo } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import "react-native-gesture-handler";
 
 export default function App() {
   console.log("default...", DefaultTheme);
@@ -24,12 +26,12 @@ export default function App() {
   );
 
   return (
-    <View style={styles.container}>
-      <NavigationContainer>
+    <GestureHandlerRootView style={styles.container}>
+      <NavigationContainer theme={theme}>
         <RootNavigation />
         <StatusBar style="dark" />
       </NavigationContainer>
-    </View>
+    </GestureHandlerRootView>
   );
 }
 
