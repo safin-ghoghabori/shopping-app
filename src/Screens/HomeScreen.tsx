@@ -17,6 +17,7 @@ import { useCallback, useRef, useState } from "react";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import CustomBackdrop from "../components/CustomBackdrop";
 import FilterView from "../components/FilterView";
+import { TabsStackScreenProps } from "../navigation/TabsNavigation";
 
 const AVATAR_URL =
   "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80";
@@ -30,7 +31,7 @@ const categories = [
   "Accessories-3",
 ];
 
-const HomeScreen = () => {
+const HomeScreen = ({ route, navigation }: TabsStackScreenProps<"Home">) => {
   const { colors } = useTheme();
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
 
@@ -81,7 +82,7 @@ const HomeScreen = () => {
 
   const renderMesonaryList = ({ item, i }) => {
     return (
-      <View style={{ padding: 6 }}>
+      <TouchableOpacity style={{ padding: 6 }}>
         <View
           style={{
             aspectRatio: i === 0 ? 1 : 2 / 3,
@@ -160,7 +161,7 @@ const HomeScreen = () => {
             </BlurView>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -290,11 +291,41 @@ const HomeScreen = () => {
           {/* Card */}
           <View style={{ flexDirection: "row", height: 200, gap: 12 }}>
             <View style={{ flex: 1 }}>
-              <Card />
+              <Card
+                price={120}
+                imageUrl={
+                  "https://plus.unsplash.com/premium_photo-1668613403417-a3085b52fe89?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+                }
+                onPress={() => {
+                  navigation.navigate("DetailsScreen", {
+                    id: "123",
+                  });
+                }}
+              />
             </View>
             <View style={{ flex: 1, gap: 12 }}>
-              <Card />
-              <Card />
+              <Card
+                price={170}
+                imageUrl={
+                  "https://images.unsplash.com/photo-1488161628813-04466f872be2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
+                }
+                onPress={() => {
+                  navigation.navigate("DetailsScreen", {
+                    id: "124",
+                  });
+                }}
+              />
+              <Card
+                price={100}
+                imageUrl={
+                  "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80"
+                }
+                onPress={() => {
+                  navigation.navigate("DetailsScreen", {
+                    id: "125",
+                  });
+                }}
+              />
             </View>
           </View>
         </View>
@@ -340,9 +371,18 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
-const Card = () => {
+const Card = ({
+  price,
+  imageUrl,
+  onPress,
+}: {
+  price: number;
+  imageUrl: string;
+  onPress?: () => void;
+}) => {
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
       style={{
         flex: 1,
         position: "relative",
@@ -352,7 +392,7 @@ const Card = () => {
     >
       <Image
         source={{
-          uri: "https://images.unsplash.com/photo-1484515991647-c5760fcecfc7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1049&q=80",
+          uri: imageUrl,
         }}
         resizeMode="cover"
         style={{
@@ -376,9 +416,9 @@ const Card = () => {
         }}
       >
         <Text style={{ fontSize: 16, fontWeight: "700", color: "#fff" }}>
-          $ 130
+          $ {price}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };

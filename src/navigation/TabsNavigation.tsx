@@ -1,10 +1,15 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  BottomTabScreenProps,
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs";
 import HomeScreen from "../Screens/HomeScreen";
 import Icons from "@expo/vector-icons/MaterialIcons";
 import Cart from "../Screens/Cart";
+import { CompositeScreenProps } from "@react-navigation/native";
+import { RootStackScreenProps } from "./RootNavigation";
 
 export type TabsNavigationParams = {
   Home: undefined;
@@ -13,12 +18,18 @@ export type TabsNavigationParams = {
   Profile: undefined;
 };
 
-const TabStack = createBottomTabNavigator<TabsNavigationParams>();
+const TabsStack = createBottomTabNavigator<TabsNavigationParams>();
+
+export type TabsStackScreenProps<T extends keyof TabsNavigationParams> =
+  CompositeScreenProps<
+    BottomTabScreenProps<TabsNavigationParams, T>,
+    RootStackScreenProps<"TabsStack">
+  >;
 
 const TabsNavigation = () => {
   return (
-    <TabStack.Navigator screenOptions={{ tabBarShowLabel: false }}>
-      <TabStack.Screen
+    <TabsStack.Navigator screenOptions={{ tabBarShowLabel: false }}>
+      <TabsStack.Screen
         name="Home"
         component={HomeScreen}
         options={{
@@ -28,7 +39,7 @@ const TabsNavigation = () => {
           },
         }}
       />
-      <TabStack.Screen
+      <TabsStack.Screen
         name="Cart"
         component={Cart}
         options={{
@@ -37,7 +48,7 @@ const TabsNavigation = () => {
           },
         }}
       />
-      <TabStack.Screen
+      <TabsStack.Screen
         name="Payment"
         component={Temp}
         options={{
@@ -46,7 +57,7 @@ const TabsNavigation = () => {
           },
         }}
       />
-      <TabStack.Screen
+      <TabsStack.Screen
         name="Profile"
         component={Temp}
         options={{
@@ -55,7 +66,7 @@ const TabsNavigation = () => {
           },
         }}
       />
-    </TabStack.Navigator>
+    </TabsStack.Navigator>
   );
 };
 
