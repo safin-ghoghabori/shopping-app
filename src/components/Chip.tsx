@@ -28,6 +28,7 @@ const Chip = ({
         gap: 6,
       }}
       onPress={handleSelected}
+      key={index}
     >
       {colorCircle ? colorCircle : null}
       <Text
