@@ -4,6 +4,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../Screens/HomeScreen";
 import Icons from "@expo/vector-icons/MaterialIcons";
+import Cart from "../Screens/Cart";
 
 export type TabsNavigationParams = {
   Home: undefined;
@@ -29,7 +30,7 @@ const TabsNavigation = () => {
       />
       <TabStack.Screen
         name="Cart"
-        component={Temp}
+        component={Cart}
         options={{
           tabBarIcon(props) {
             return <Icons name="shopping-cart" {...props} />;
