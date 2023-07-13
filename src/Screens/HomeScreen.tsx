@@ -80,7 +80,7 @@ const HomeScreen = ({ route, navigation }: TabsStackScreenProps<"Home">) => {
     );
   };
 
-  const renderMesonaryList = ({ item, i }) => {
+  const renderMesonaryList = ({ item, i }: any) => {
     return (
       <TouchableOpacity style={{ padding: 6 }}>
         <View
